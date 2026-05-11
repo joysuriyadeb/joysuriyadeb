@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whisper Wall - Cyberpunk Messages</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff41;
+            --secondary: #ff006e;
+            --accent: #00d9ff;
+            --dark-bg: #0a0e27;
+            --dark-card: #16213e;
+            --dark-border: #1f3a52;
+            --text-primary: #ecf0f1;
+            --text-secondary: #bdc3c7;
+            --glow-primary: 0 0 20px rgba(0, 255, 65, 0.5);
+            --glow-secondary: 0 0 20px rgba(255, 0, 110, 0.5);
+            --glow-accent: 0 0 20px rgba(0, 217, 255, 0.5);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #16213e 100%);
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, 0.05) 25%, rgba(0, 255, 65, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.05) 75%, rgba(0, 255, 65, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 255, 65, 0.05) 25%, rgba(0, 255, 65, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.05) 75%, rgba(0, 255, 65, 0.05) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            pointer-events: none;
+            animation: gridShift 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridShift {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
+
+        /* Floating particles */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(0, 255, 65, 0.3), rgba(0, 255, 65, 0)),
+                radial-gradient(2px 2px at 60px 70px, rgba(0, 217, 255, 0.3), rgba(0, 217, 255, 0)),
+                radial-gradient(1px 1px at 50px 50px, rgba(255, 0, 110, 0.3), rgba(255, 0, 110, 0)),
+                radial-gradient(1px 1px at 130px 80px, rgba(0, 255, 65, 0.2), rgba(0, 255, 65, 0)),
+                radial-gradient(2px 2px at 90px 10px, rgba(0, 217, 255, 0.3), rgba(0, 217, 255, 0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: particleFloat 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-family: 'Audiowide', cursive;
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: var(--glow-primary), var(--glow-accent);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            animation: neon-flicker 3s infinite;
+        }
+
+        @keyframes neon-flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.95; }
+        }
+
+        .tagline {
+            color: var(--accent);
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        /* Top Controls */
+        .top-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            animation: slideUp 0.8s ease-out 0.1s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(22, 33, 62, 0.8);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 10px rgba(0, 217, 255, 0.2);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            box-shadow: inset 0 0 15px rgba(0, 217, 255, 0.4), 0 0 20px rgba(0, 217, 255, 0.5);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            background: rgba(22, 33, 62, 0.8);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: var(--dark-bg);
+            box-shadow: var(--glow-primary), 0 0 30px rgba(0, 255, 65, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .btn.secondary {
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn.secondary:hover {
+            background: var(--accent);
+            color: var(--dark-bg);
+            box-shadow: var(--glow-accent), 0 0 30px rgba(0, 217, 255, 0.6);
+        }
+
+        /* Message Input */
+        .message-input-section {
+            margin-bottom: 40px;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .input-wrapper {
+            background: rgba(22, 33, 62, 0.6);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.4), 0 0 20px rgba(255, 0, 110, 0.3);
+        }
+
+        .input-wrapper textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            resize: none;
+            min-height: 80px;
+            outline: none;
+            margin-bottom: 15px;
+        }
+
+        .input-wrapper textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .input-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .category-select {
+            padding: 8px 12px;
+            background: rgba(22, 33, 62, 0.8);
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-select:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .char-count {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn {
+            padding: 12px 30px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border: none;
+            color: var(--dark-bg);
+            font-family: 'Space Mono', monospace;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.8), 0 0 20px rgba(0, 217, 255, 0.5);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Messages Feed */
+        .messages-container {
+            display: grid;
+            gap: 20px;
+            animation: slideUp 0.8s ease-out 0.3s both;
+        }
+
+        .message-card {
+            background: linear-gradient(135deg, rgba(22, 33, 62, 0.8) 0%, rgba(31, 58, 82, 0.6) 100%);
+            border: 2px solid var(--dark-border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: cardAppear 0.5s ease-out;
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .message-card:hover::before {
+            left: 100%;
+        }
+
+        .message-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3), inset 0 0 20px rgba(0, 255, 65, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .message-category {
+            display: inline-block;
+            padding: 5px 12px;
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .message-time {
+            color: var(--text-secondary);
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .message-text {
+            color: var(--text-primary);
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            word-break: break-word;
+        }
+
+        .message-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--dark-border);
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .message-card:hover .message-footer {
+            opacity: 1;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+            transform: scale(1.05);
+        }
+
+        .action-btn.liked {
+            background: var(--primary);
+            color: var(--dark-bg);
+        }
+
+        .action-btn.delete {
+            border-color: var(--secondary);
+            color: var(--secondary);
+            background: rgba(255, 0, 110, 0.1);
+        }
+
+        .action-btn.delete:hover {
+            background: var(--secondary);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.5);
+        }
+
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sync-status.synced {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .sync-status.syncing {
+            color: var(--accent);
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+        }
+
+        .sync-status.offline {
+            color: var(--secondary);
+            text-shadow: 0 0 10px rgba(255, 0, 110, 0.5);
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.6;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .empty-state h2 {
+            font-size: 24px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Filter Pills */
+        .filter-pills {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .filter-pills:hover {
+            opacity: 1;
+        }
+
+        .filter-pill {
+            padding: 6px 14px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-pill:hover,
+        .filter-pill.active {
+            background: var(--accent);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(22, 33, 62, 0.9);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+        }
+
+        .theme-btn:hover {
+            box-shadow: 0 0 30px rgba(0, 217, 255, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Light Mode */
+        body.light-mode {
+            --primary: #ff006e;
+            --secondary: #00d9ff;
+            --accent: #00ff41;
+            --dark-bg: #ffffff;
+            --dark-card: #f5f5f5;
+            --dark-border: #e0e0e0;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 36px;
+            }
+
+            .top-controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: 100%;
+            }
+
+            .input-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .message-card {
+                padding: 15px;
+            }
+
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+            }
+
+            .theme-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle">
+        <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">⚡ WHISPER WALL ⚡</div>
+            <div class="tagline">Anonymous Messages | Real Time Sync</div>
+        </div>
+
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search messages..." oninput="filterMessages()">
+            </div>
+            <div class="control-buttons">
+                <button class="btn" onclick="sortByDate()">
+                    <i class="fas fa-sort"></i> Latest
+                </button>
+                <button class="btn secondary" onclick="sortByLikes()">
+                    <i class="fas fa-heart"></i> Trending
+                </button>
+            </div>
+            <div class="sync-status synced" id="syncStatus">
+                <i class="fas fa-cloud"></i> Synced
+            </div>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="filter-pills" id="filterPills"></div>
+
+        <!-- Message Input -->
+        <div class="message-input-section">
+            <div class="input-wrapper">
+                <textarea id="messageInput" placeholder="💭 Share your thoughts... (Support emojis!)" maxlength="500" oninput="updateCharCount()"></textarea>
+                <div class="input-controls">
+                    <select class="category-select" id="categorySelect">
+                        <option value="General">📌 General</option>
+                        <option value="Question">❓ Question</option>
+                        <option value="Story">📖 Story</option>
+                        <option value="Quote">✨ Quote</option>
+                        <option value="Random">🎲 Random</option>
+                        <option value="Music">🎵 Music</option>
+                        <option value="Advice">💡 Advice</option>
+                    </select>
+                    <span class="char-count"><span id="charCount">0</span>/500</span>
+                    <button class="submit-btn" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i> SEND
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="messages-container" id="messagesContainer">
+            <div class="empty-state">
+                <div class="empty-icon">📡</div>
+                <h2>No Whispers Yet</h2>
+                <p>Be the first to share something on the wall</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase config - UPDATE THIS
+        const FIREBASE_CONFIG = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT.firebaseapp.com",
+            databaseURL: "https://YOUR_PROJECT.firebaseio.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        let messages = [];
+        let filteredMessages = [];
+        let firebaseReady = false;
+        let firebaseDb = null;
+        let messagesRef = null;
+        let currentSort = 'date'; // 'date' or 'likes'
+        let currentFilter = 'all'; // category filter
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLocalMessages();
+            renderMessages();
+            initFirebase();
+            setupCategoryFilter();
+            loadTheme();
+        });
+
+        // Load local messages
+        function loadLocalMessages() {
+            const stored = localStorage.getItem('whisperMessages');
+            if (stored) {
+                try {
+                    messages = JSON.parse(stored);
+                } catch (e) {
+                    console.error('Failed to load messages');
+                }
+            }
+        }
+
+        // Initialize Firebase
+        async function initFirebase() {
+            try {
+                if (FIREBASE_CONFIG.apiKey === "YOUR_API_KEY") {
+                    console.warn("Firebase not configured");
+                    updateSyncStatus('offline');
+                    return;
+                }
+
+                const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js');
+                const { getDatabase, ref, onValue, push, remove, update } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js');
+
+                const app = initializeApp(FIREBASE_CONFIG);
+                firebaseDb = getDatabase(app);
+                messagesRef = ref(firebaseDb, 'whispers');
+
+                window.firebaseModules = { push, remove, ref, update };
+
+                onValue(messagesRef, (snapshot) => {
+                    const data = snapshot.val();
+                    if (data) {
+                        messages = Object.entries(data).map(([key, value]) => ({
+                            id: key,
+                            ...value
+                        }));
+                        localStorage.setItem('whisperMessages', JSON.stringify(messages));
+                        renderMessages();
+                    }
+                    updateSyncStatus('synced');
+                }, (error) => {
+                    console.error("Firebase error:", error);
+                    updateSyncStatus('offline');
+                });
+
+                firebaseReady = true;
+            } catch (err) {
+                console.error("Firebase init failed:", err);
+                updateSyncStatus('offline');
+            }
+        }
+
+        // Send message
+        async function sendMessage() {
+            const text = document.getElementById('messageInput').value.trim();
+            const category = document.getElementById('categorySelect').value;
+
+            if (!text) return;
+
+            updateSyncStatus('syncing');
+
+            const newMessage = {
+                text: text,
+                category: category,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+                likes: 0,
+                liked: false
+            };
+
+            try {
+                if (firebaseReady && firebaseDb) {
+                    const { push } = window.firebaseModules;
+                    await push(messagesRef, newMessage);
+                } else {
+                    newMessage.id = Date.now().toString();
+                    messages.unshift(newMessage);
+                    localStorage.setItem('whisperMessages', JSON.stringify(messages));
+                    renderMessages();
+                }
+
+                document.getElementById('messageInput').value = '';
+                updateCharCount();
+                document.getElementById('categorySelect').value = 'General';
+            } catch (err) {
+                console.error('Error sending message:', err);
+                updateSyncStatus('offline');
+            }
+
+            updateSyncStatus('synced');
+        }
+
+        // Like message
+        async function likeMessage(id) {
+            const message = messages.find(m => m.id === id);
+            if (!message) return;
+
+            message.liked = !message.liked;
+            message.likes = message.liked ? (message.likes || 0) + 1 : Math.max(0, (message.likes || 0) - 1);
+
+            if (firebaseReady && firebaseDb) {
+                const { update, ref } = window.firebaseModules;
+                try {
+                    await update(ref(firebaseDb, `whispers/${id}`), {
+                        likes: message.likes,
+                        liked: message.liked
+                    });
+                } catch (err) {
+                    console.error('Error updating likes:', err);
+                }
+            } else {
+                localStorage.setItem('whisperMessages', JSON.stringify(messages));
+            }
+
+            renderMessages();
+        }
+
+        // Delete message
+        async function deleteMessage(id) {
+            if (!confirm('Delete this whisper?')) return;
+
+            if (firebaseReady && firebaseDb) {
+                const { remove, ref } = window.firebaseModules;
+                try {
+                    await remove(ref(firebaseDb, `whispers/${id}`));
+                } catch (err) {
+                    console.error('Error deleting message:', err);
+                }
+            } else {
+                messages = messages.filter(m => m.id !== id);
+                localStorage.setItem('whisperMessages', JSON.stringify(messages));
+                renderMessages();
+            }
+        }
+
+        // Filter messages
+        function filterMessages() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            filteredMessages = messages.filter(m => {
+                const matchSearch = m.text.toLowerCase().includes(search);
+                const matchCategory = currentFilter === 'all' || m.category === currentFilter;
+                return matchSearch && matchCategory;
+            });
+
+            if (currentSort === 'likes') {
+                filteredMessages.sort((a, b) => (b.likes || 0) - (a.likes || 0));
+            }
+
+            renderMessages();
+        }
+
+        // Sort by date
+        function sortByDate() {
+            currentSort = 'date';
+            filteredMessages = [...messages].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            renderMessages();
+        }
+
+        // Sort by likes
+        function sortByLikes() {
+            currentSort = 'likes';
+            filteredMessages = [...messages].sort((a, b) => (b.likes || 0) - (a.likes || 0));
+            renderMessages();
+        }
+
+        // Setup category filter
+        function setupCategoryFilter() {
+            const categories = ['General', 'Question', 'Story', 'Quote', 'Random', 'Music', 'Advice'];
+            const pills = document.getElementById('filterPills');
+            
+            pills.innerHTML = `
+                <div class="filter-pill active" onclick="setFilter('all')">All</div>
+                ${categories.map(cat => `
+                    <div class="filter-pill" onclick="setFilter('${cat}')">${cat}</div>
+                `).join('')}
+            `;
+        }
+
+        // Set filter
+        function setFilter(category) {
+            currentFilter = category;
+            document.querySelectorAll('.filter-pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            filterMessages();
+        }
+
+        // Render messages
+        function renderMessages() {
+            const container = document.getElementById('messagesContainer');
+            const toRender = filteredMessages.length > 0 ? filteredMessages : messages;
+
+            if (toRender.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📡</div>
+                        <h2>No Whispers Yet</h2>
+                        <p>Be the first to share something on the wall</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = toRender.map(msg => `
+                <div class="message-card">
+                    <div class="message-header">
+                        <span class="message-category">${msg.category || 'General'}</span>
+                        <span class="message-time">${msg.time} • ${msg.date}</span>
+                    </div>
+                    <div class="message-text">${msg.text}</div>
+                    <div class="message-footer">
+                        <div class="message-actions">
+                            <button class="action-btn ${msg.liked ? 'liked' : ''}" onclick="likeMessage('${msg.id}')">
+                                <i class="fas fa-heart"></i> <span>${msg.likes || 0}</span>
+                            </button>
+                            <button class="action-btn delete" onclick="deleteMessage('${msg.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update char count
+        function updateCharCount() {
+            const input = document.getElementById('messageInput');
+            document.getElementById('charCount').textContent = input.value.length;
+        }
+
+        // Update sync status
+        function updateSyncStatus(status) {
+            const statusEl = document.getElementById('syncStatus');
+            statusEl.className = `sync-status ${status}`;
+            const icons = {
+                synced: '<i class="fas fa-cloud"></i>',
+                syncing: '<i class="fas fa-spinner pulse"></i>',
+                offline: '<i class="fas fa-exclamation-circle"></i>'
+            };
+            const texts = {
+                synced: 'Synced',
+                syncing: 'Syncing...',
+                offline: 'Offline'
+            };
+            statusEl.innerHTML = `${icons[status]} ${texts[status]}`;
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+            updateThemeButton();
+        }
+
+        function loadTheme() {
+            if (localStorage.getItem('theme') === 'light') {
+                document.body.classList.add('light-mode');
+            }
+            updateThemeButton();
+        }
+
+        function updateThemeButton() {
+            const btn = document.getElementById('themeBtn');
+            btn.innerHTML = document.body.classList.contains('light-mode') 
+                ? '<i class="fas fa-sun"></i>' 
+                : '<i class="fas fa-moon"></i>';
+        }
+    </script>
+</body>
+</html>
