@@ -1,67 +1,660 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whisper Wall To Joy- Cyberpunk Messages</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        :root {
-            --primary: #00ff41;
-            --secondary: #ff006e;
-            --accent: #00d9ff;
-            --dark-bg: #0a0e27;
-            --dark-card: #16213e;
-            --dark-border: #1f3a52;
-            --text-primary: #ecf0f1;
-            --text-secondary: #bdc3c7;
-            --glow-primary: 0 0 20px rgba(0, 255, 65, 0.5);
-            --glow-secondary: 0 0 20px rgba(255, 0, 110, 0.5);
-            --glow-accent: 0 0 20px rgba(0, 217, 255, 0.5);
-        }
+<title>Whisper Wall ⚡</title>
 
-        body {
-            background: linear-gradient(135deg, #0a0e27 0%, #16213e 100%);
-            color: var(--text-primary);
-            font-family: 'Space Mono', monospace;
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-        /* Animated grid background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(0deg, transparent 24%, rgba(0, 255, 65, 0.05) 25%, rgba(0, 255, 65, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.05) 75%, rgba(0, 255, 65, 0.05) 76%, transparent 77%, transparent),
-                linear-gradient(90deg, transparent 24%, rgba(0, 255, 65, 0.05) 25%, rgba(0, 255, 65, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 255, 65, 0.05) 75%, rgba(0, 255, 65, 0.05) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;
-            pointer-events: none;
-            animation: gridShift 20s linear infinite;
-            z-index: 1;
-        }
+<style>
 
-        @keyframes gridShift {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(50px); }
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        /* Floating particles */
-        body::after {
+:root{
+    --primary:#00ff88;
+    --secondary:#00c3ff;
+    --danger:#ff0066;
+
+    --bg:#050816;
+    --card:#111827;
+
+    --text:#ffffff;
+    --muted:#9ca3af;
+}
+
+body{
+    background:linear-gradient(135deg,#050816,#0f172a);
+    color:var(--text);
+    font-family:Arial,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.logo{
+    text-align:center;
+    font-size:42px;
+    font-weight:bold;
+    margin:20px 0;
+    color:var(--primary);
+    text-shadow:0 0 20px rgba(0,255,136,.6);
+}
+
+.topbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.search{
+    flex:1;
+}
+
+.search input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#111827;
+    color:white;
+    font-size:15px;
+    outline:none;
+    border:2px solid transparent;
+}
+
+.search input:focus{
+    border-color:var(--secondary);
+    box-shadow:0 0 15px rgba(0,195,255,.4);
+}
+
+.btn{
+    border:none;
+    padding:12px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:black;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+}
+
+.btn-secondary{
+    background:var(--secondary);
+    color:black;
+}
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.filter{
+    padding:8px 14px;
+    border-radius:50px;
+    background:#111827;
+    cursor:pointer;
+    border:1px solid #1f2937;
+    transition:.3s;
+    font-size:13px;
+}
+
+.filter.active{
+    background:var(--primary);
+    color:black;
+}
+
+.input-box{
+    background:rgba(17,24,39,.95);
+    padding:20px;
+    border-radius:16px;
+    margin-bottom:25px;
+    border:1px solid #1f2937;
+}
+
+textarea{
+    width:100%;
+    min-height:100px;
+    resize:none;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:white;
+    font-size:15px;
+}
+
+.bottom-controls{
+    margin-top:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+select{
+    background:#0f172a;
+    color:white;
+    border:none;
+    padding:10px;
+    border-radius:8px;
+}
+
+.char-count{
+    color:var(--muted);
+}
+
+.message-list{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.card{
+    background:rgba(17,24,39,.95);
+    border-radius:16px;
+    padding:20px;
+    border:1px solid #1f2937;
+    animation:fade .3s ease;
+}
+
+@keyframes fade{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.badge{
+    background:rgba(0,255,136,.15);
+    color:var(--primary);
+    padding:6px 12px;
+    border-radius:50px;
+    font-size:12px;
+}
+
+.time{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.message{
+    line-height:1.7;
+    word-break:break-word;
+}
+
+.card-bottom{
+    margin-top:20px;
+    display:flex;
+    gap:10px;
+}
+
+.action{
+    border:none;
+    background:#0f172a;
+    color:white;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.action:hover{
+    transform:scale(1.05);
+}
+
+.like.active{
+    background:var(--primary);
+    color:black;
+}
+
+.delete{
+    background:var(--danger);
+}
+
+.empty{
+    text-align:center;
+    padding:70px 20px;
+    color:var(--muted);
+}
+
+.sync{
+    text-align:right;
+    margin-bottom:10px;
+    color:var(--primary);
+    font-size:13px;
+}
+
+@media(max-width:700px){
+
+    .logo{
+        font-size:30px;
+    }
+
+    .bottom-controls{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        ⚡ Whisper Wall ⚡
+    </div>
+
+    <div class="sync" id="syncStatus">
+        Synced
+    </div>
+
+    <div class="topbar">
+
+        <div class="search">
+            <input 
+                type="text"
+                id="searchInput"
+                placeholder="Search messages..."
+                oninput="filterMessages()"
+            >
+        </div>
+
+        <button class="btn btn-primary" onclick="sortLatest()">
+            Latest
+        </button>
+
+        <button class="btn btn-secondary" onclick="sortTrending()">
+            Trending
+        </button>
+
+    </div>
+
+    <div class="filters" id="filters"></div>
+
+    <div class="input-box">
+
+        <textarea
+            id="messageInput"
+            maxlength="500"
+            placeholder="Write anonymous whisper..."
+            oninput="updateCount()"
+        ></textarea>
+
+        <div class="bottom-controls">
+
+            <select id="category">
+
+                <option>General</option>
+                <option>Question</option>
+                <option>Story</option>
+                <option>Quote</option>
+                <option>Advice</option>
+                <option>Music</option>
+
+            </select>
+
+            <div class="char-count">
+                <span id="count">0</span>/500
+            </div>
+
+            <button class="btn btn-primary" onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="message-list" id="messageList"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    push,
+    onValue,
+    remove,
+    update
+}
+from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyAfnDGzS2QJyWDNPQl2LuO--GOxPAf7uxQ",
+
+    authDomain: "personal-message-379b4.firebaseapp.com",
+
+    databaseURL: "https://personal-message-379b4-default-rtdb.firebaseio.com",
+
+    projectId: "personal-message-379b4",
+
+    storageBucket: "personal-message-379b4.appspot.com",
+
+    messagingSenderId: "861066018093",
+
+    appId: "1:861066018093:web:8ae48c3f9d5e9b3223a7a4"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+const messagesRef = ref(db,"whispers");
+
+let messages = [];
+
+let currentFilter = "All";
+
+let currentSort = "latest";
+
+const categories = [
+    "All",
+    "General",
+    "Question",
+    "Story",
+    "Quote",
+    "Advice",
+    "Music"
+];
+
+createFilters();
+
+onValue(messagesRef,(snapshot)=>{
+
+    const data = snapshot.val();
+
+    if(data){
+
+        messages = Object.entries(data).map(([id,val])=>({
+            id,
+            ...val
+        }));
+
+    }else{
+        messages = [];
+    }
+
+    render();
+
+});
+
+window.sendMessage = async function(){
+
+    const input = document.getElementById("messageInput");
+
+    const text = input.value.trim();
+
+    const category =
+        document.getElementById("category").value;
+
+    if(!text) return;
+
+    setStatus("Syncing...");
+
+    await push(messagesRef,{
+
+        text,
+        category,
+
+        likes:0,
+
+        liked:false,
+
+        created:Date.now(),
+
+        time:new Date().toLocaleString()
+
+    });
+
+    input.value = "";
+
+    updateCount();
+
+    setStatus("Synced");
+
+};
+
+window.likeMessage = async function(id){
+
+    const msg = messages.find(m=>m.id===id);
+
+    if(!msg) return;
+
+    const liked = !msg.liked;
+
+    const likes = liked
+        ? (msg.likes||0)+1
+        : Math.max((msg.likes||0)-1,0);
+
+    await update(ref(db,"whispers/"+id),{
+        liked,
+        likes
+    });
+
+};
+
+window.deleteMessage = async function(id){
+
+    if(!confirm("Delete message?")) return;
+
+    await remove(ref(db,"whispers/"+id));
+
+};
+
+window.filterMessages = function(){
+
+    render();
+
+};
+
+window.sortLatest = function(){
+
+    currentSort = "latest";
+
+    render();
+
+};
+
+window.sortTrending = function(){
+
+    currentSort = "trending";
+
+    render();
+
+};
+
+function render(){
+
+    const container =
+        document.getElementById("messageList");
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    let filtered = messages.filter(m=>{
+
+        const searchMatch =
+            m.text.toLowerCase().includes(search);
+
+        const categoryMatch =
+            currentFilter==="All"
+            || m.category===currentFilter;
+
+        return searchMatch && categoryMatch;
+
+    });
+
+    if(currentSort==="latest"){
+
+        filtered.sort((a,b)=>b.created-a.created);
+
+    }else{
+
+        filtered.sort((a,b)=>(b.likes||0)-(a.likes||0));
+
+    }
+
+    if(filtered.length===0){
+
+        container.innerHTML = `
+            <div class="empty">
+                <h2>No messages yet</h2>
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = filtered.map(msg=>`
+
+        <div class="card">
+
+            <div class="card-top">
+
+                <div class="badge">
+                    ${escapeHTML(msg.category)}
+                </div>
+
+                <div class="time">
+                    ${msg.time}
+                </div>
+
+            </div>
+
+            <div class="message">
+                ${escapeHTML(msg.text)}
+            </div>
+
+            <div class="card-bottom">
+
+                <button
+                    class="action like ${msg.liked ? 'active':''}"
+                    onclick="likeMessage('${msg.id}')"
+                >
+                    ❤️ ${msg.likes||0}
+                </button>
+
+                <button
+                    class="action delete"
+                    onclick="deleteMessage('${msg.id}')"
+                >
+                    🗑 Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+}
+
+function createFilters(){
+
+    const wrap =
+        document.getElementById("filters");
+
+    wrap.innerHTML = categories.map(cat=>`
+
+        <div
+            class="filter ${cat==="All" ? "active":""}"
+            onclick="setFilter('${cat}',this)"
+        >
+            ${cat}
+        </div>
+
+    `).join("");
+
+}
+
+window.setFilter = function(category,el){
+
+    currentFilter = category;
+
+    document.querySelectorAll(".filter")
+    .forEach(f=>f.classList.remove("active"));
+
+    el.classList.add("active");
+
+    render();
+
+};
+
+window.updateCount = function(){
+
+    document.getElementById("count")
+    .innerText =
+        document.getElementById("messageInput")
+        .value.length;
+
+};
+
+function escapeHTML(text){
+
+    const div = document.createElement("div");
+
+    div.innerText = text;
+
+    return div.innerHTML;
+
+}
+
+function setStatus(text){
+
+    document.getElementById("syncStatus")
+    .innerText = text;
+
+}
+
+</script>
+
+</body>
+</html>        body::after {
             content: '';
             position: fixed;
             top: 0;
